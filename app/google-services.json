@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "656106594332",
+    "project_id": "drita-media",
+    "storage_bucket": "drita-media.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:656106594332:android:a7cdb6ded975f9c2a8ffd9",
+        "android_client_info": {
+          "package_name": "com.fatjoni.dritatvlive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "656106594332-47b2jt0mrkq0tesa46rujvi8ghgnt8vi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fatjoni.dritatvlive",
+            "certificate_hash": "e08806d9d4fe563ab21632c0c644022a23b8725b"
+          }
+        },
+        {
+          "client_id": "656106594332-3db5r45lr39pgd649u4ulk6k5p0lf6ua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4KnHnTNtDSqDvE1UPkXssviP0QyMl9Xs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "656106594332-3db5r45lr39pgd649u4ulk6k5p0lf6ua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
