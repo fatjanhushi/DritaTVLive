@@ -39,15 +39,11 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerview.apply {
-            setHasFixedSize(true)
-            layoutManager=LinearLayoutManager(context)
-        }
+
 
         val query: Query = Firebase.database("https://drita-media-default-rtdb.europe-west1.firebasedatabase.app/")
             .reference
             .child("channels")
-            .limitToLast(10)
 
         val options = FirebaseRecyclerOptions.Builder<Channel>()
             .setQuery(query, Channel::class.java)
@@ -65,7 +61,10 @@ class FirstFragment : Fragment() {
         }
 
         adapter.startListening()
-        binding.recyclerview.adapter = adapter
+        binding.recyclerview.apply {
+            layoutManager=LinearLayoutManager(context)
+            this.adapter = adapter
+        }
 
 
     }
