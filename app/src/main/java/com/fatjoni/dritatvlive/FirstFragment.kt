@@ -2,11 +2,16 @@ package com.fatjoni.dritatvlive
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fatjoni.dritatvlive.databinding.FragmentFirstBinding
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 import com.google.firebase.database.ktx.database
@@ -26,32 +31,43 @@ class FirstFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            val intent = Intent(context, StreamActivity::class.java)
-            startActivity(intent)
+        binding.recyclerview.apply {
+            setHasFixedSize(true)
+            layoutManager=LinearLayoutManager(context)
         }
-        // Write a message to the database
-        //val database = Firebase.database("https://drita-media-default-rtdb.europe-west1.firebasedatabase.app/")
-        //Firebase.database.setPersistenceEnabled(true)
-        //val myRef = database.getReference("message")
-
-        //myRef.setValue("Hello, World!")
 
         val query: Query = Firebase.database("https://drita-media-default-rtdb.europe-west1.firebasedatabase.app/")
             .reference
             .child("channels")
             .limitToLast(10)
+
+        val options = FirebaseRecyclerOptions.Builder<Channel>()
+            .setQuery(query, Channel::class.java)
+            .build()
+
+        val adapter = object : FirebaseRecyclerAdapter<Channel, MyViewHolder>(options){
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+                return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.channel_item, parent, false))
+            }
+
+            override fun onBindViewHolder(holder: MyViewHolder, position: Int, model: Channel) {
+                holder.textView.text = model.name
+            }
+
+        }
+
+        adapter.startListening()
+        binding.recyclerview.adapter = adapter
+
+
     }
 
     override fun onDestroyView() {
