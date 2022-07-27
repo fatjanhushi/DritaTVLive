@@ -1,21 +1,23 @@
 package com.fatjoni.dritatvlive
 
 import android.content.Intent
+import android.content.res.AssetManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.fatjoni.dritatvlive.databinding.FragmentFirstBinding
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.io.InputStream
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -56,6 +58,16 @@ class FirstFragment : Fragment() {
 
             override fun onBindViewHolder(holder: MyViewHolder, position: Int, model: Channel) {
                 holder.textView.text = model.name
+                val assetManager: AssetManager = activity!!.getAssets()
+                val inputStream: InputStream = assetManager.open("img/tvchannel.jpg")
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                holder.imageView.load(bitmap)
+                holder.streamBtn.setOnClickListener {
+                    Intent(context, StreamActivity::class.java).apply {
+                        putExtra("streamUrl", model.link)
+                        startActivity(this)
+                    }
+                }
             }
 
         }

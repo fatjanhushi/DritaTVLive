@@ -67,6 +67,7 @@ class StreamActivity : AppCompatActivity() {
     }
 
     private fun initializePlayer() {
+
         val trackSelector = DefaultTrackSelector(this).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
@@ -76,7 +77,7 @@ class StreamActivity : AppCompatActivity() {
             .also { exoPlayer ->
                 viewBinding.videoView.player = exoPlayer
                 val mediaItem = MediaItem.Builder()
-                    .setUri(getString(R.string.media_url_hls))
+                    .setUri(intent.getStringExtra("streamUrl"))
                     .setMimeType(MimeTypes.APPLICATION_M3U8)
                     .build()
 
